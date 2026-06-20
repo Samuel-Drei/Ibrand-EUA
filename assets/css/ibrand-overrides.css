@@ -1,0 +1,235 @@
+/* ── Ibrand Brand Override ── */
+
+/* ─ Base ─ */
+/* overflow-x:hidden on html/body would auto-promote overflow-y to "auto",
+   turning body into its own scroll container and breaking position:sticky
+   in descendants (.destaques-parallax, .sticky-viewport). overflow-x:clip
+   prevents horizontal scroll without creating a scroll container. */
+html, body { overflow-x: clip; }
+
+::-moz-selection { color: #fff; background: #F04E23; }
+::selection      { color: #fff; background: #F04E23; }
+
+/* ─ Dark backgrounds: navy → black ─ */
+#preloader,
+.hero,
+.col-af.one-column.font-w,
+.sobre.font-w,
+.cards.font-w,
+.destaques.font-w,
+.servicos.font-w,
+.faq.font-w,
+.metodologia.font-w,
+.clientes.font-w,
+.depoimentos.font-w,
+.cta,
+.footer,
+.links,
+.scroll-container { background-color: #111 !important; }
+
+.hero .image { background-color: #111 !important; }
+.cases { background-color: #1a1a1a; }
+
+/* ─ Nav overlay ─ */
+.nav { background: rgba(10,10,10,.92) !important; }
+.header.header-is-visible.header--dark { background: rgba(10,10,10,.85) !important; }
+
+/* ─ Cases section: text on dark background ─ */
+.cases h2,
+.cases .info h2,
+.cases .info p,
+.cases .info p a,
+.cases .info p strong { color: #fff !important; }
+.cases .info p        { opacity: .8 !important; }
+.cases .info p a      { opacity: 1  !important; }
+
+/* span.title tags (category labels) on dark sections */
+.cases span.title,
+.cases .info span.title {
+  color: #fff !important;
+  background-color: rgba(255,255,255,.1) !important;
+  border: 1px solid rgba(255,255,255,.2);
+}
+
+/* ─ Buttons: amber → Ibrand orange ─ */
+.button {
+  background-color: #F04E23 !important;
+  color: #fff !important;
+}
+.button:not(.button-outline):not(.button-white):not(.button-blur)::after {
+  border-color: rgba(240,78,35,.5) !important;
+}
+.button:hover {
+  background-color: #F25F38 !important;
+  border-color:     #F25F38 !important;
+  color: #fff !important;
+}
+.button svg, .button img { fill: #fff !important; }
+.button:hover svg        { fill: #fff !important; }
+
+/* Header ghost button */
+.header .buttons .button {
+  background:   rgba(255,255,255,.06) !important;
+  border-color: rgba(255,255,255,.55) !important;
+  color: #fff !important;
+}
+
+/* ─ Logo ─ */
+a.logo { gap: 0 !important; }
+a.logo img.ibrand-logo {
+  width: 48px; height: 48px;
+  min-width: 48px; max-width: 48px;
+  display: block; object-fit: contain;
+}
+.footer .info .ibrand-logo-footer {
+  height: 48px; width: auto;
+  display: block; object-fit: contain;
+}
+
+/* ─ Social hover ─ */
+.footer .social a:hover,
+.links  .social a:hover { background-color: #F04E23 !important; }
+
+/* ─ Owl dots on dark ─ */
+.font-w .owl-dots .owl-dot { background-color: #fff; }
+.cases .owl-dots .owl-dot  { background-color: #fff; }
+
+/* ─ Glow-card: yellow → orange ─ */
+.glow-card::before {
+  background: radial-gradient(
+    180px circle at var(--mx) var(--my),
+    rgba(240,78,35,calc(1  * var(--alpha))) 0%,
+    rgba(240,78,35,calc(.6 * var(--alpha))) 40%,
+    rgba(240,78,35,0) 70%
+  ) !important;
+}
+.glow-card::after {
+  background: radial-gradient(
+    220px circle at var(--mx) var(--my),
+    rgba(240,78,35,calc(.55 * var(--alpha))) 0%,
+    rgba(240,78,35,calc(.45 * var(--alpha))) 30%,
+    rgba(240,78,35,calc(.35 * var(--alpha))) 55%,
+    rgba(0,0,0,0) 70%
+  ) !important;
+}
+
+/* ─ Parallax list accent ─ */
+.destaques ul li {
+  background: linear-gradient(89deg,rgba(240,78,35,.06) 0%,rgba(240,78,35,0) 100%) !important;
+}
+
+/* ─ Reveal curtain: navy → black ─ */
+.font-w .reveal::before,
+.font-w .image-reveal::before {
+  background-color: #111 !important;
+}
+
+/* ─ Cases "more" tile ─ */
+.cases ul li.more a,
+.cases ul li.more .detail.font-w,
+.cases ul li.more .detail {
+  background-color: #111 !important;
+}
+
+/* ─ Float CTA ─ */
+.float-cta .button {
+  background:  linear-gradient(160deg,rgba(240,78,35,.15) 0%,rgba(240,78,35,.07) 100%) !important;
+  box-shadow:  rgba(240,78,35,.18) 0 0 0 1px inset !important;
+}
+.float-cta .button:hover {
+  background: #F04E23 !important;
+  color: #fff !important;
+}
+
+/* ════════════════════════════════════
+   MOBILE FIXES  (≤ 991 px)
+════════════════════════════════════ */
+@media screen and (max-width: 991px) {
+
+  /* Prevent any section from causing horizontal scroll */
+  section, header, footer, nav, main { max-width: 100vw; overflow-x: hidden; }
+
+  /* Hero: fill the screen cleanly */
+  .hero { height: 100svh; max-height: none !important; }
+  .hero:not(.portfolio) .col-af-content {
+    width: 90%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+    gap: 24px;
+    align-items: flex-start;
+  }
+  .hero .info,
+  .hero .info.right { width: 100% !important; text-align: left; }
+  .hero .info.right  { gap: 24px; }
+  .hero .info h1     { font-size: 36px; }
+  .hero .info p      { font-size: 16px; margin: 0; }
+  .hero .buttons     { width: 100%; padding: 0; }
+  .hero .buttons .button { width: 100%; min-width: unset; }
+
+  /* Video overlay — keep it behind content */
+  .hero .image { z-index: 1; opacity: .55; }
+
+  /* Destaques parallax: disable sticky on mobile */
+  .destaques.destaques-parallax {
+    position: relative !important;
+    top: auto !important;
+    height: auto !important;
+    padding: 56px 0 !important;
+  }
+  .destaques.destaques-parallax .col-af-content {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 90% !important;
+  }
+  .destaques .info { width: 100% !important; padding: 0 !important; margin-bottom: 40px !important; }
+  .destaques ul.parallax-list {
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+  }
+  /* Always show parallax items on mobile */
+  .destaques ul li.parallax-item {
+    transform: none !important;
+    opacity: 1   !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    padding: 24px 20px !important;
+  }
+  .destaques ul li .icon { margin: 0 20px 0 0 !important; }
+
+  /* Services cards stack properly */
+  .servicos ul { flex-direction: column !important; }
+  .servicos ul li { width: 100% !important; padding: 4px 0 !important; }
+  .servicos ul li a { padding: 28px 24px !important; }
+  .servicos ul li br { display: none; }
+
+  /* Scroll section */
+  .scroll-container { height: 250vh; }
+  .text-content h2.bigger { font-size: 28px !important; line-height: 1.1; }
+  .placeholder { width: 80px !important; }
+
+  /* Cases carousel */
+  .col-af-slide { width: 95% !important; margin-left: 5% !important; overflow: visible !important; }
+  .cases ul.owl-carousel { overflow: visible; }
+  .cases ul.owl-carousel li .image { aspect-ratio: 4 / 5; }
+
+  /* CTA stacks */
+  .cta .col-af-content { flex-direction: column; gap: 32px; }
+
+  /* Footer stacks */
+  .footer .info { flex-direction: column; align-items: flex-start; gap: 24px; padding: 40px 0; }
+  .footer .info div:nth-of-type(2) { justify-content: flex-start !important; }
+  .footer .end { text-align: left; }
+  .footer .end div a, .footer .end div p { display: block; margin: 6px 0; }
+
+  /* Float CTA visible area */
+  .float-cta { padding: 0 24px 20px; }
+  .float-cta .button { border-radius: 56px; min-width: unset; width: 100%; }
+
+  /* Header height on mobile */
+  .header .col-af-content { height: 65px; padding: 0 16px; }
+  a.logo img.ibrand-logo   { width: 38px; height: 38px; min-width: 38px; }
+}
