@@ -146,8 +146,10 @@ a.logo img.ibrand-logo {
 ════════════════════════════════════ */
 @media screen and (max-width: 991px) {
 
-  /* Prevent any section from causing horizontal scroll */
-  section, header, footer, nav, main { max-width: 100vw; overflow-x: hidden; }
+  /* Prevent any section from causing horizontal scroll.
+     overflow-x:clip (not hidden) avoids creating a new scroll container,
+     which would break position:sticky in descendants (.sticky-viewport). */
+  section, header, footer, nav, main { max-width: 100vw; overflow-x: clip; }
 
   /* Hero: fill the screen cleanly */
   .hero { height: 100svh; max-height: none !important; }
