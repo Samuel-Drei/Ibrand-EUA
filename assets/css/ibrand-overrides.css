@@ -51,6 +51,14 @@ html, body { overflow-x: clip; }
   border: 1px solid rgba(255,255,255,.2);
 }
 
+/* Projects filter bar + empty state on dark background */
+.cases .portfolioFilter button { color: #fff !important; }
+.cases .portfolioFilter button:hover,
+.cases .portfolioFilter button.active {
+  background-color: rgba(255,255,255,.1) !important;
+}
+.cases #filter-empty { color: #fff; opacity: .7; }
+
 /* ─ Buttons: amber → Ibrand orange ─ */
 .button {
   background-color: #F04E23 !important;
