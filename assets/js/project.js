@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let targetProgress = 0;
     let currentProgress = 0;
     const damping = 0.07;
+    const settleEpsilon = 0.05;
 
     const computeTarget = () => {
       const rect = section.getBoundingClientRect();
@@ -49,20 +50,48 @@ document.addEventListener('DOMContentLoaded', () => {
       targetProgress = (1 - Math.min(Math.max(raw, 0), 1)) * 100;
     };
 
+    let rafId = null;
+    let inView = false;
+
+    // Runs only while the gallery is in the viewport, and stops scheduling
+    // new frames once the eased value has settled. Without this the loop
+    // ran forever for the lifetime of the page, competing for the main
+    // thread with every other scroll-driven animation and causing the
+    // stutter/flicker reported on mobile.
     const tick = () => {
-      computeTarget();
+      if (!inView) {
+        rafId = null;
+        return;
+      }
       if (reduceMotion) {
         currentProgress = 50;
-      } else {
-        currentProgress += (targetProgress - currentProgress) * damping;
+        section.style.setProperty('--scroll-progress', currentProgress.toFixed(4) + '%');
+        rafId = null;
+        return;
       }
+      computeTarget();
+      currentProgress += (targetProgress - currentProgress) * damping;
       section.style.setProperty('--scroll-progress', currentProgress.toFixed(4) + '%');
-      requestAnimationFrame(tick);
+      if (Math.abs(targetProgress - currentProgress) < settleEpsilon) {
+        rafId = null;
+        return;
+      }
+      rafId = requestAnimationFrame(tick);
     };
 
+    const ensureTicking = () => {
+      if (inView && rafId === null) rafId = requestAnimationFrame(tick);
+    };
+
+    const io = new IntersectionObserver((entries) => {
+      inView = entries[0].isIntersecting;
+      if (inView) ensureTicking();
+    });
+    io.observe(section);
+
     build();
-    requestAnimationFrame(tick);
     window.addEventListener('resize', build, { passive: true });
+    window.addEventListener('scroll', ensureTicking, { passive: true });
   })();
 
   // ── Related projects carousel ──
