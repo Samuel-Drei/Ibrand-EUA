@@ -23,6 +23,7 @@ html, body { overflow-x: clip; }
 .clientes.font-w,
 .depoimentos.font-w,
 .cta,
+.orcamento-section,
 .footer,
 .links,
 .scroll-container { background-color: #111 !important; }
@@ -102,6 +103,52 @@ a.logo img.ibrand-logo {
 .font-w .owl-dots .owl-dot { background-color: #fff; }
 .cases .owl-dots .owl-dot  { background-color: #fff; }
 
+/* ─ Cases carousel: prev/next arrows, desktop only ─ */
+.cases .owl-nav { display: none; }
+@media screen and (min-width: 992px) {
+  .cases .owl-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    position: absolute;
+    top: auto;
+    bottom: -56px;
+    left: 50%;
+    width: auto;
+    transform: translateX(-50%);
+  }
+  .cases .owl-nav button.owl-prev,
+  .cases .owl-nav button.owl-next {
+    float: none;
+    width: 44px;
+    height: 44px;
+    background-color: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.25);
+  }
+  .cases .owl-nav button.owl-prev:hover,
+  .cases .owl-nav button.owl-next:hover {
+    background-color: rgba(255,255,255,.22);
+  }
+  .cases .owl-dots { display: none; }
+}
+
+/* ─ Orçamento: lead form card ─ */
+.orcamento-section { padding-top: 0; padding-bottom: 96px; }
+.orcamento-wrap { max-width: 560px; margin: 0 auto; }
+.orcamento-wrap .form-af {
+  width: 100%;
+  float: none;
+  margin: 0;
+  padding: 40px;
+  border-top: 0;
+  background-color: #fff;
+  border-radius: 12px;
+}
+.orcamento-feedback { display: none; margin: 16px 0 0; font-size: 15px; line-height: 1.5; color: #1a7a3c; }
+.orcamento-feedback.is-visible { display: block; }
+.orcamento-feedback.is-error { color: #e50202; }
+
 /* ─ Glow-card: yellow → orange ─ */
 .glow-card::before {
   background: radial-gradient(
@@ -137,16 +184,6 @@ a.logo img.ibrand-logo {
 .cases ul li.more .detail.font-w,
 .cases ul li.more .detail {
   background-color: #111 !important;
-}
-
-/* ─ Float CTA ─ */
-.float-cta .button {
-  background:  linear-gradient(160deg,rgba(240,78,35,.15) 0%,rgba(240,78,35,.07) 100%) !important;
-  box-shadow:  rgba(240,78,35,.18) 0 0 0 1px inset !important;
-}
-.float-cta .button:hover {
-  background: #F04E23 !important;
-  color: #fff !important;
 }
 
 /* ════════════════════════════════════
@@ -226,6 +263,9 @@ a.logo img.ibrand-logo {
   .cases ul.owl-carousel { overflow: visible; }
   .cases ul.owl-carousel li .image { aspect-ratio: 4 / 5; }
 
+  /* Orçamento form card */
+  .orcamento-wrap .form-af { padding: 28px 20px; }
+
   /* CTA stacks */
   .cta .col-af-content { flex-direction: column; gap: 32px; }
 
@@ -234,10 +274,6 @@ a.logo img.ibrand-logo {
   .footer .info div:nth-of-type(2) { justify-content: flex-start !important; }
   .footer .end { text-align: left; }
   .footer .end div a, .footer .end div p { display: block; margin: 6px 0; }
-
-  /* Float CTA visible area */
-  .float-cta { padding: 0 24px 20px; }
-  .float-cta .button { border-radius: 56px; min-width: unset; width: 100%; }
 
   /* Header height on mobile */
   .header .col-af-content { height: 65px; padding: 0 16px; }

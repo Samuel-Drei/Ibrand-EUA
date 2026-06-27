@@ -85,8 +85,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const io = new IntersectionObserver((entries) => {
       inView = entries[0].isIntersecting;
-      if (inView) ensureTicking();
-    });
+      if (inView) {
+        // Snap straight to the correct offset on (re)entry instead of
+        // lerping from a stale frozen value — a fast flick can cover the
+        // whole 100vh section before this callback fires, so without the
+        // snap the mosaic visibly "catches up" from wherever it was left.
+        computeTarget();
+        currentProgress = targetProgress;
+        section.style.setProperty('--scroll-progress', currentProgress.toFixed(4) + '%');
+        ensureTicking();
+      }
+    }, { rootMargin: '50% 0px 50% 0px' });
     io.observe(section);
 
     build();
