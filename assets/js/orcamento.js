@@ -9,6 +9,17 @@ document.addEventListener('DOMContentLoaded', () => {
     origemInput.value = new URLSearchParams(window.location.search).get('origem') || '';
   }
 
+  // The cookie banner is fixed to the bottom of the screen and several
+  // fields scroll behind it on a long form — dismiss it on the first
+  // interaction so it stops swallowing taps meant for the inputs.
+  form.addEventListener('focusin', () => {
+    const cookieBanner = document.querySelector('.cookies-container');
+    const cookieSave = document.querySelector('.cookies-save');
+    if (cookieBanner && getComputedStyle(cookieBanner).display !== 'none') {
+      cookieSave?.click();
+    }
+  }, { once: true });
+
   const submitBtn = form.querySelector('input[type="submit"]');
   const spinner = form.querySelector('.submit-spinner');
   const feedback = form.querySelector('.orcamento-feedback');
