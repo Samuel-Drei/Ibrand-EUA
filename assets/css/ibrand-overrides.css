@@ -144,6 +144,10 @@ a.logo img.ibrand-logo {
   border-top: 0;
   background-color: #fff;
   border-radius: 12px;
+  /* .form-af's own div children float (theme default); without this the
+     card collapses to its padding height and every field paints outside
+     of it, off the white card. */
+  display: flow-root;
 }
 .orcamento-feedback { display: none; margin: 16px 0 0; font-size: 15px; line-height: 1.5; color: #1a7a3c; }
 .orcamento-feedback.is-visible { display: block; }
