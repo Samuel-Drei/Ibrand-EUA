@@ -95,6 +95,10 @@ a.logo img.ibrand-logo {
   display: block; object-fit: contain;
 }
 
+/* ─ Preloader: stop intercepting taps as soon as the fade-out starts,
+   instead of waiting for the 1s opacity/visibility animation to finish ─ */
+.anime-start #preloader { pointer-events: none; }
+
 /* ─ Social hover ─ */
 .footer .social a:hover,
 .links  .social a:hover { background-color: #F04E23 !important; }
