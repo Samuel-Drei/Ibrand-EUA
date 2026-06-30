@@ -224,22 +224,6 @@
 .proposal-chart-orange  { color: #F04E23; }
 .proposal-chart-canvas-wrap { position: relative; height: 280px; }
 
-.proposal-breakdown-card {
-  background: #1a1a1a;
-  border: 1px solid rgba(255,255,255,.07);
-  border-radius: 12px;
-  padding: 28px;
-  margin-bottom: 12px;
-}
-.proposal-breakdown-row { display: flex; align-items: center; gap: 16px; padding: 10px 0; }
-.proposal-breakdown-row + .proposal-breakdown-row { border-top: 1px solid rgba(255,255,255,.06); }
-.proposal-breakdown-label { font-size: 12px; font-weight: 600; color: rgba(255,255,255,.45); min-width: 72px; text-transform: uppercase; letter-spacing: .04em; }
-.proposal-breakdown-bar-wrap { flex: 1; background: rgba(255,255,255,.07); border-radius: 100px; height: 8px; overflow: hidden; }
-.proposal-breakdown-bar { height: 100%; border-radius: 100px; transition: width .5s ease; }
-.proposal-breakdown-bar--organic { background: #F04E23; }
-.proposal-breakdown-bar--paid    { background: rgba(240,78,35,.4); }
-.proposal-breakdown-value { font-size: 15px; font-weight: 700; color: #fff; min-width: 32px; text-align: right; }
-
 /* ─ Mobile ─ */
 @media screen and (max-width: 991px) {
   .proposal-services-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -255,6 +239,5 @@
 
   .proposal-chart-card { padding: 20px; }
   .proposal-chart-canvas-wrap { height: 220px; }
-  .proposal-breakdown-card { padding: 20px; }
   .proposal-br { display: inline; }
 }
