@@ -206,6 +206,15 @@
 .wa-toast-time { font-size: 11px; color: #999; flex: none; }
 .wa-toast-title { font-size: 13px; font-weight: 700; color: #111; margin: 0 0 2px; }
 .wa-toast-msg { font-size: 13px; color: #333; line-height: 1.35; margin: 0; }
+.wa-toast-stat {
+  display: block;
+  font-size: 23px;
+  font-weight: 800;
+  color: #F04E23;
+  line-height: 1.15;
+  margin-bottom: 1px;
+  letter-spacing: -.01em;
+}
 
 /* ─ Results section ─ */
 .proposal-results-header { margin-bottom: 56px; }
