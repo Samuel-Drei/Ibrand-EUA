@@ -508,11 +508,25 @@
       }, { passive: true });
     });
 
+    /* ── lock / unlock native overscroll on frames ── */
+    /* When in locked mode, contain prevents the page from scrolling while
+       the user's cursor/finger is inside the frame. On release we must
+       remove that containment so the next wheel/touch gesture propagates
+       to the page naturally — otherwise the user gets stuck at the bottom
+       of the last preview with no way to continue scrolling the page. */
+    function lockFrames() {
+      frames.forEach(function (f) { f.style.overscrollBehavior = 'contain'; });
+    }
+    function unlockFrames() {
+      frames.forEach(function (f) { f.style.overscrollBehavior = 'auto'; });
+    }
+
     /* ── snap page so window[idx] is perfectly framed ── */
     function snapTo(idx) {
       if (snapping) return;
       snapping = true;
       active   = idx;
+      lockFrames();
       windows.forEach(function (w, i) { w.classList.toggle('pvw-active', i === idx); });
       var rect = windows[idx].getBoundingClientRect();
       var targetY = window.scrollY + rect.top - HEADER - 8;
@@ -520,19 +534,28 @@
       setTimeout(function () { snapping = false; }, SNAP_MS);
     }
 
-    /* ── disengage: release page scroll ── */
-    function release(dir) {
-      active = -1;
+    /* ── disengage: restore natural page scroll ── */
+    var releaseTime = 0;
+    function release() {
+      active      = -1;
+      releaseTime = Date.now();
       windows.forEach(function (w) { w.classList.remove('pvw-active'); });
-      if (dir > 0) window.scrollBy({ top: 200, behavior: 'smooth' });
+      unlockFrames();
+      /* no programmatic scrollBy — let the user's next gesture scroll
+         naturally; the artificial jolt was jarring and unnecessary */
     }
 
     /* ── wheel on each frame ── */
+    var THRESHOLD = 40; /* px from boundary to begin transition early */
     frames.forEach(function (frame, idx) {
       frame.addEventListener('wheel', function (e) {
-        if (snapping || active !== idx) return;
-        var atBottom = frame.scrollTop >= frame.scrollHeight - frame.clientHeight - 3;
-        var atTop    = frame.scrollTop <= 3;
+        if (snapping) return;
+
+        /* not in locked mode — don't intercept; natural scroll resumes */
+        if (active !== idx) return;
+
+        var atBottom = frame.scrollTop >= frame.scrollHeight - frame.clientHeight - THRESHOLD;
+        var atTop    = frame.scrollTop <= THRESHOLD;
         var now      = Date.now();
 
         if (e.deltaY > 0 && atBottom) {
@@ -540,14 +563,14 @@
           if (now - lastBoundary < DEBOUNCE_MS) return;
           lastBoundary = now;
           if (idx < frames.length - 1) { frames[idx + 1].scrollTop = 0; snapTo(idx + 1); }
-          else { release(1); }
+          else { release(); }
 
         } else if (e.deltaY < 0 && atTop) {
           e.preventDefault();
           if (now - lastBoundary < DEBOUNCE_MS) return;
           lastBoundary = now;
           if (idx > 0) { frames[idx - 1].scrollTop = frames[idx - 1].scrollHeight; snapTo(idx - 1); }
-          else { release(-1); }
+          else { release(); }
         }
       }, { passive: false });
     });
@@ -559,18 +582,18 @@
       frame.addEventListener('touchend', function (e) {
         if (snapping || active !== idx) return;
         var dy       = touchY0 - e.changedTouches[0].clientY;
-        var atBottom = frame.scrollTop >= frame.scrollHeight - frame.clientHeight - 3;
-        var atTop    = frame.scrollTop <= 3;
+        var atBottom = frame.scrollTop >= frame.scrollHeight - frame.clientHeight - THRESHOLD;
+        var atTop    = frame.scrollTop <= THRESHOLD;
         var now      = Date.now();
         if (Math.abs(dy) < 50) return;
         if (dy > 0 && atBottom && now - lastBoundary > DEBOUNCE_MS) {
           lastBoundary = now;
           if (idx < frames.length - 1) { frames[idx + 1].scrollTop = 0; snapTo(idx + 1); }
-          else { release(1); }
+          else { release(); }
         } else if (dy < 0 && atTop && now - lastBoundary > DEBOUNCE_MS) {
           lastBoundary = now;
           if (idx > 0) { frames[idx - 1].scrollTop = frames[idx - 1].scrollHeight; snapTo(idx - 1); }
-          else { release(-1); }
+          else { release(); }
         }
       }, { passive: true });
     });
@@ -579,8 +602,10 @@
     var obs = new IntersectionObserver(function (entries) {
       var entry = entries[0];
       if (!entry.isIntersecting || active !== -1 || snapping) return;
+      /* ignore for 2 s after a release so scrolling past the section
+         upward doesn't accidentally re-engage the lock */
+      if (Date.now() - releaseTime < 2000) return;
       var top = entry.boundingClientRect.top;
-      /* only engage when scrolling down into it (window top in upper 70% of viewport) */
       if (top > HEADER + 10 && top < window.innerHeight * 0.72) {
         frames[0].scrollTop = 0;
         snapTo(0);
