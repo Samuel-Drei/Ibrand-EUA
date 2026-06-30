@@ -276,6 +276,51 @@
       </div>
     </section>
 
+    <!-- DEPOIMENTOS -->
+    <section class="proposal-dep col-af is-dark font-w">
+      <div class="col-af-content">
+        <span class="proposal-eyebrow">Depoimentos</span>
+        <div class="proposal-dep-header">
+          <h2 class="lines">O que falam<br> da parceria.</h2>
+          <div class="proposal-dep-nav">
+            <button class="proposal-dep-prev" aria-label="Anterior">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="proposal-dep-next" aria-label="Próximo">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="proposal-dep-track-wrap">
+        <div class="proposal-dep-track col-af-content">
+
+          <div class="proposal-dep-card">
+            <div class="proposal-dep-screen">
+              <img src="../assets/img/projects/txc-querencia-proposta/dep-01.webp" alt="Depoimento: Meta batida na certaaa" loading="lazy">
+            </div>
+            <p class="proposal-dep-quote">"META BATIDA NA CERTAAA"</p>
+          </div>
+
+          <div class="proposal-dep-card">
+            <div class="proposal-dep-screen">
+              <img src="../assets/img/projects/txc-querencia-proposta/dep-02.webp" alt="Depoimento: Vendemos em 1 dia mais de 80%" loading="lazy">
+            </div>
+            <p class="proposal-dep-quote">"Vendemos em 1 dia, mais de 80% do DROPP TXC+RAM. Vocês fazem parte desse resultado."</p>
+          </div>
+
+          <div class="proposal-dep-card">
+            <div class="proposal-dep-screen">
+              <img src="../assets/img/projects/txc-querencia-proposta/dep-03.webp" alt="Depoimento: Ganhamos prêmio Franqueado Ouro" loading="lazy">
+            </div>
+            <p class="proposal-dep-quote">"Ganhamos prêmio Franqueado Ouro. Obrigado. Equipe @todos"</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
     <!-- CTA -->
     <section class="cta col-af font-w is-dark" id="orcamento">
       <div class="col-af-content">
@@ -394,6 +439,28 @@
       }
     });
   });
+
+  /* ─ Testimonials carousel ─ */
+  (function () {
+    var track = document.querySelector('.proposal-dep-track');
+    var prev  = document.querySelector('.proposal-dep-prev');
+    var next  = document.querySelector('.proposal-dep-next');
+    if (!track) return;
+
+    var cardW = function () {
+      var c = track.querySelector('.proposal-dep-card');
+      return c ? c.getBoundingClientRect().width + 24 : 384;
+    };
+
+    if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -cardW(), behavior: 'smooth' }); });
+    if (next) next.addEventListener('click', function () { track.scrollBy({ left:  cardW(), behavior: 'smooth' }); });
+
+    /* drag-to-scroll on desktop */
+    var startX = 0, startLeft = 0, dragging = false;
+    track.addEventListener('mousedown', function (e) { dragging = true; startX = e.pageX; startLeft = track.scrollLeft; track.style.userSelect = 'none'; });
+    window.addEventListener('mousemove', function (e) { if (!dragging) return; track.scrollLeft = startLeft - (e.pageX - startX); });
+    window.addEventListener('mouseup',   function ()  { dragging = false; track.style.userSelect = ''; });
+  }());
 
   /* ─ Preview snap-scroll ─ */
   (function () {

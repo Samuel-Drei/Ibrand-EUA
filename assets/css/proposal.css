@@ -292,4 +292,79 @@
   .proposal-chart-card { padding: 20px; }
   .proposal-chart-canvas-wrap { height: 220px; }
   .proposal-br { display: inline; }
+
+  /* Testimonials on mobile: full-width single-card scroll */
+  .proposal-dep-card { flex: 0 0 85vw; max-width: 85vw; }
+  .proposal-dep-quote { font-size: 15px; }
+  .proposal-dep-nav { display: none; }
+}
+
+/* ─ Testimonials ─ */
+.proposal-dep { overflow: hidden; }
+.proposal-dep-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+.proposal-dep-header h2 { color: #fff; margin: 0; }
+.proposal-dep-nav { display: flex; gap: 10px; flex: none; padding-bottom: 6px; }
+.proposal-dep-prev,
+.proposal-dep-next {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.12);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background .2s;
+}
+.proposal-dep-prev:hover,
+.proposal-dep-next:hover { background: rgba(255,255,255,.15); }
+.proposal-dep-prev svg,
+.proposal-dep-next svg { width: 18px; height: 18px; max-width: 18px; display: block; }
+
+.proposal-dep-track-wrap {
+  overflow: hidden;           /* mask the horizontal overflow */
+}
+.proposal-dep-track {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 4px;
+  cursor: grab;
+}
+.proposal-dep-track::-webkit-scrollbar { display: none; }
+.proposal-dep-track:active { cursor: grabbing; }
+
+.proposal-dep-card {
+  flex: 0 0 360px;
+  max-width: 360px;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.proposal-dep-screen {
+  background: #111;
+  border: 2px solid rgba(255,255,255,.08);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,.55);
+}
+.proposal-dep-screen img { width: 100%; height: auto; display: block; }
+.proposal-dep-quote {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255,255,255,.75);
+  line-height: 1.5;
+  margin: 0;
+  padding: 0 4px;
+  border-left: 3px solid #F04E23;
+  padding-left: 14px;
 }
