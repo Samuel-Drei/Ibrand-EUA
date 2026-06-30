@@ -63,7 +63,7 @@
 
 .proposal-previews-stack { display: flex; flex-direction: column; gap: 56px; }
 
-.proposal-preview-card { display: flex; flex-direction: column; }
+.proposal-preview-card { display: flex; flex-direction: column; position: relative; }
 .proposal-preview-window {
   background: #fff;
   border-radius: 12px;
@@ -168,6 +168,45 @@
 }
 .pvw-hint--gone { opacity: 0; }
 
+/* WhatsApp-style stat toast — pops up beside the preview window while scrolling */
+.wa-toast {
+  position: absolute;
+  top: -18px;
+  right: 28px;
+  width: 290px;
+  max-width: calc(100% - 32px);
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 18px 44px rgba(0,0,0,.4);
+  padding: 12px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  z-index: 25;
+  transform: translate(28px, -14px) scale(.94);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .5s cubic-bezier(.2,.85,.25,1), opacity .35s ease;
+}
+.wa-toast.wa-toast--show { transform: translate(0, 0) scale(1); opacity: 1; }
+.wa-toast-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #25D366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.wa-toast-icon svg { width: 19px; height: 19px; max-width: 19px; display: block; }
+.wa-toast-body { flex: 1; min-width: 0; }
+.wa-toast-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 2px; }
+.wa-toast-app { font-size: 10px; font-weight: 700; color: #25D366; text-transform: uppercase; letter-spacing: .05em; }
+.wa-toast-time { font-size: 11px; color: #999; flex: none; }
+.wa-toast-title { font-size: 13px; font-weight: 700; color: #111; margin: 0 0 2px; }
+.wa-toast-msg { font-size: 13px; color: #333; line-height: 1.35; margin: 0; }
+
 /* ─ Results section ─ */
 .proposal-results-header { margin-bottom: 56px; }
 .proposal-results-header h2 { color: #fff; max-width: 680px; margin: 12px 0 16px; }
@@ -232,6 +271,7 @@
 
   .proposal-preview-frame { height: 56vh; min-height: 360px; }
   .pvw-hint { font-size: 11px; padding: 5px 12px; }
+  .wa-toast { display: none; }
 
   .proposal-kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .proposal-kpi-grid-3 { grid-template-columns: repeat(2, 1fr); }

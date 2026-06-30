@@ -137,6 +137,16 @@
                 <img src="../assets/img/projects/txc-querencia-proposta/site-main-full.webp" alt="Site completo TXC Querência" loading="lazy">
               </div>
             </div>
+            <div class="wa-toast" id="wa-toast-0">
+              <div class="wa-toast-icon">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M12 3a9 9 0 0 0-7.74 13.6L3 21l4.6-1.21A9 9 0 1 0 12 3Z" fill="#fff"/><path d="M8.6 7.9c.2-.45.4-.46.6-.47h.5c.17 0 .4-.06.62.48.23.55.78 1.9.85 2.04.07.14.12.3.02.49-.1.18-.15.3-.3.46-.14.16-.3.36-.43.49-.14.14-.29.3-.13.58.17.28.74 1.22 1.59 1.97 1.1.96 2.02 1.27 2.3 1.41.28.14.45.12.61-.07.17-.2.7-.81.89-1.09.18-.28.37-.23.62-.14.26.1 1.62.77 1.9.9.27.14.46.2.52.32.07.12.07.68-.16 1.34-.23.66-1.34 1.27-1.86 1.34-.5.08-1.04.13-3.32-.7-2.8-1.04-4.6-3.86-4.74-4.04-.14-.18-1.12-1.49-1.12-2.84 0-1.35.7-2 1-2.27Z" fill="#25D366"/></svg>
+              </div>
+              <div class="wa-toast-body">
+                <div class="wa-toast-top"><span class="wa-toast-app">WhatsApp</span><span class="wa-toast-time">agora</span></div>
+                <div class="wa-toast-title">TXC Querência</div>
+                <p class="wa-toast-msg">+80% da coleção RAM × TXC vendida no primeiro dia 🔥</p>
+              </div>
+            </div>
           </div>
 
           <div class="proposal-preview-card">
@@ -150,6 +160,16 @@
               </div>
               <div class="proposal-preview-frame" id="pvf-1">
                 <img src="../assets/img/projects/txc-querencia-proposta/site-vip-full.webp" alt="Site VIP pré-venda TXC Querência" loading="lazy">
+              </div>
+            </div>
+            <div class="wa-toast" id="wa-toast-1">
+              <div class="wa-toast-icon">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M12 3a9 9 0 0 0-7.74 13.6L3 21l4.6-1.21A9 9 0 1 0 12 3Z" fill="#fff"/><path d="M8.6 7.9c.2-.45.4-.46.6-.47h.5c.17 0 .4-.06.62.48.23.55.78 1.9.85 2.04.07.14.12.3.02.49-.1.18-.15.3-.3.46-.14.16-.3.36-.43.49-.14.14-.29.3-.13.58.17.28.74 1.22 1.59 1.97 1.1.96 2.02 1.27 2.3 1.41.28.14.45.12.61-.07.17-.2.7-.81.89-1.09.18-.28.37-.23.62-.14.26.1 1.62.77 1.9.9.27.14.46.2.52.32.07.12.07.68-.16 1.34-.23.66-1.34 1.27-1.86 1.34-.5.08-1.04.13-3.32-.7-2.8-1.04-4.6-3.86-4.74-4.04-.14-.18-1.12-1.49-1.12-2.84 0-1.35.7-2 1-2.27Z" fill="#25D366"/></svg>
+              </div>
+              <div class="wa-toast-body">
+                <div class="wa-toast-top"><span class="wa-toast-app">WhatsApp</span><span class="wa-toast-time">agora</span></div>
+                <div class="wa-toast-title">TXC Querência VIP</div>
+                <p class="wa-toast-msg">+600 pessoas já entraram pra comunidade VIP 🎉</p>
               </div>
             </div>
           </div>
@@ -395,6 +415,9 @@
     var lastBoundary  = 0;
 
     /* ── build progress bar + hint for each window ── */
+    var toasts = [document.getElementById('wa-toast-0'), document.getElementById('wa-toast-1')];
+    var toastShown = [false, false];
+
     frames.forEach(function (frame, i) {
       /* progress bar below chrome bar, inside window */
       var bar  = document.createElement('div');  bar.className  = 'pvw-bar';
@@ -413,6 +436,14 @@
           ? frame.scrollTop / (frame.scrollHeight - frame.clientHeight) : 1;
         fill.style.width = Math.min(pct * 100, 100).toFixed(1) + '%';
         if (pct > 0.03) hint.classList.add('pvw-hint--gone');
+
+        /* WhatsApp-style stat toast — fires once per site, while the user is browsing it */
+        var toast = toasts[i];
+        if (toast && !toastShown[i] && pct > 0.1) {
+          toastShown[i] = true;
+          toast.classList.add('wa-toast--show');
+          setTimeout(function () { toast.classList.remove('wa-toast--show'); }, 5000);
+        }
       }, { passive: true });
     });
 
